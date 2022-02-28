@@ -27,6 +27,7 @@
  * Copyright (c) 2012, 2015 by Delphix. All rights reserved.
  */
 
+#include <sys/sysmacros.h>
 #include <sys/zfs_context.h>
 #include <sys/spa.h>
 #include <sys/spa_impl.h>
@@ -230,7 +231,8 @@ vdev_mirror_load(mirror_map_t *mm, vdev_t *vd, uint64_t zio_offset)
 	 * of a seek increment.
 	 */
 	offset_diff = (int64_t)(last_offset - zio_offset);
-	if (ABS(offset_diff) < zfs_vdev_mirror_rotating_seek_offset) {
+	int64_t offset_diff_cmp = ((offset_diff) < 0 ? -(offset_diff) : (offset_diff));
+	if (offset_diff_cmp < zfs_vdev_mirror_rotating_seek_offset) {
 		MIRROR_BUMP(vdev_mirror_stat_rotating_offset);
 		return (load + (zfs_vdev_mirror_rotating_seek_inc / 2));
 	}
