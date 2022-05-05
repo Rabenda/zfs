@@ -27,6 +27,7 @@
  * Copyright (c) 2012, 2015 by Delphix. All rights reserved.
  */
 
+#include <sys/sysmacros.h>
 #include <sys/zfs_context.h>
 #include <sys/spa.h>
 #include <sys/spa_impl.h>

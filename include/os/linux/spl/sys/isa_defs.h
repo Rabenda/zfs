@@ -216,10 +216,35 @@
 
 #define	_ALIGNMENT_REQUIRED	1
 
+/*
+ * loongarch arch specific defines
+ * only loongarch64 is supported yet
+ */
+
+#elif defined(__loongarch__)
+
+#if !defined(__loongarch64)
+#define	__loongarch64
+#endif
+
+#define	_ZFS_LITTLE_ENDIAN
+#define	_SUNOS_VTOC_16
+
+#ifndef _LP64
+#define	_LP64
+#endif
+
+/*
+ * Illumos doesn't define _ALIGNMENT_REQUIRED for loongarch, so default to 1
+ * out of paranoia.
+ */
+#define	_ALIGNMENT_REQUIRED	1
+
 #else
+
 /*
  * Currently supported:
- * x86_64, x32, i386, arm, powerpc, s390, sparc, mips, and RV64G
+ * x86_64, x32, i386, arm, powerpc, s390, sparc, mips, loongarch64 ,and RV64G
  */
 #error "Unsupported ISA type"
 #endif
